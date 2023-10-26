@@ -7,6 +7,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:notes_v2/constants/colors.dart';
 import 'package:notes_v2/model/notes.dart';
+import 'package:notes_v2/screens/edit.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -171,7 +172,26 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
 
-      floatingActionButton: FloatingActionButton(onPressed: (){},
+      floatingActionButton: FloatingActionButton(onPressed: () async {
+         final result = await Navigator.push(
+          context, 
+          MaterialPageRoute(
+           builder: (BuildContext context) => const EditScreen(),
+    ),);    
+
+        if(result!=null){
+          setState(() {
+            filteredNotes.add(
+            Note(id:sampleNotes.length, 
+                title:result[0] , 
+                content:result[1],
+                modifiedTime: DateTime.timestamp())
+            );
+            filteredNotes = sampleNotes;
+          });
+        }
+
+      },
       elevation: 10,
       child: Icon(Icons.add, size: 30, color: Colors.grey.shade800,),
       ),
