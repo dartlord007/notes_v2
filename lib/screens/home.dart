@@ -5,6 +5,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:notes_v2/constants/colors.dart';
 import 'package:notes_v2/model/notes.dart';
 import 'package:notes_v2/screens/edit.dart';
@@ -116,12 +117,20 @@ class _HomeScreenState extends State<HomeScreen> {
               itemCount: filteredNotes.length,
               itemBuilder: (context, index){
                 return Card(
+
                   margin: EdgeInsets.only(bottom: 10),
                   color: getRadomColor(),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                   child: Padding(
                     padding: const EdgeInsets.all(8),
                     child: ListTile(
+                      onTap: ()async {
+                        final result = await Navigator.push(
+                                              context, 
+                                              MaterialPageRoute(
+                                              builder: (BuildContext context) => const EditScreen(),
+                                        ),);  
+                      },
                       title: RichText(
                         maxLines: 3,
                         overflow: TextOverflow.ellipsis,
@@ -146,7 +155,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         subtitle: Padding(
                           padding: const EdgeInsets.only(top: 6),
-                          child: Text("${sampleNotes[index].modifiedTime}", 
+                          child: Text('Edited: ${DateFormat("EEE MMM d, yyyy h:mm a").format(sampleNotes[index].modifiedTime)}', 
                              style: TextStyle(color: Colors.grey.shade800, 
                                             fontStyle: FontStyle.italic, 
                                             fontSize: 10,) ),
@@ -179,15 +188,17 @@ class _HomeScreenState extends State<HomeScreen> {
            builder: (BuildContext context) => const EditScreen(),
     ),);    
 
-        if(result!=null){
+        if(result != null){
           setState(() {
-            filteredNotes.add(
+            filteredNotes = sampleNotes;
+            sampleNotes.add(
             Note(id:sampleNotes.length, 
                 title:result[0] , 
                 content:result[1],
-                modifiedTime: DateTime.timestamp())
+                modifiedTime: DateTime.now()),
+                
             );
-            filteredNotes = sampleNotes;
+            
           });
         }
 

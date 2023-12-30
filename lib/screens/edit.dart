@@ -1,9 +1,11 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
+import 'package:notes_v2/model/notes.dart';
 
 class EditScreen extends StatefulWidget {
-  const EditScreen({super.key});
+  final Note? note;
+  const EditScreen({super.key, this.note});
 
   @override
   State<EditScreen> createState() => _EditScreenState();
@@ -11,8 +13,8 @@ class EditScreen extends StatefulWidget {
 
 class _EditScreenState extends State<EditScreen> {
 
-  final TextEditingController _titleController =  TextEditingController();
-  final TextEditingController _contentController = TextEditingController();
+    TextEditingController _titleController =  TextEditingController();
+    TextEditingController _contentController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +68,7 @@ class _EditScreenState extends State<EditScreen> {
         
       ),
       floatingActionButton: FloatingActionButton(onPressed: (){
-                Navigator.pop(context, [_titleController, _contentController]);
+                Navigator.pop(context, [_titleController.text, _contentController.text]);
       },
                 elevation: 10,
                 backgroundColor: Colors.grey.shade700,
