@@ -16,6 +16,16 @@ class _EditScreenState extends State<EditScreen> {
     TextEditingController _titleController =  TextEditingController();
     TextEditingController _contentController = TextEditingController();
 
+    @override
+    void initState() {
+      
+      if (widget.note!=null){
+      _titleController = TextEditingController(text: widget.note!.title);
+      _contentController = TextEditingController(text: widget.note!.content);}
+      super.initState(); 
+
+    }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,7 +49,8 @@ class _EditScreenState extends State<EditScreen> {
               ],
             ),
 
-            Expanded(child: ListView(
+            Expanded(child: 
+            ListView(
               children: [
                 TextField(
                   controller: _titleController,
@@ -52,6 +63,7 @@ class _EditScreenState extends State<EditScreen> {
                 ),
 
                 TextField(
+                  maxLines: null,
                   controller: _contentController,
                   style: TextStyle(color: Colors.white, fontSize: 15),
                   decoration: InputDecoration(
@@ -74,7 +86,6 @@ class _EditScreenState extends State<EditScreen> {
                 backgroundColor: Colors.grey.shade700,
                 child: Icon(Icons.save)
                 ),
-                
     );
   }
 }

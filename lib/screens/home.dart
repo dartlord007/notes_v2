@@ -128,13 +128,30 @@ class _HomeScreenState extends State<HomeScreen> {
                         final result = await Navigator.push(
                                               context, 
                                               MaterialPageRoute(
-                                              builder: (BuildContext context) => const EditScreen(),
-                                        ),);  
-                      },
+                                              builder: (BuildContext context) => EditScreen(note: filteredNotes[index]),
+                                        ),
+                                        );  
+                                        if(result != null){
+                                            setState(() {
+                                              int originalIndex = sampleNotes.indexOf(filteredNotes[index]);
+                                              
+                                              sampleNotes[originalIndex] = Note(
+                                                  id:sampleNotes[originalIndex].id, 
+                                                  title:result[0] , 
+                                                  content:result[1],
+                                                  modifiedTime: DateTime.now());
+
+                                             filteredNotes[index] = Note(
+                                                  id:filteredNotes[index].id,
+                                                  title:result[0], 
+                                                  content:result[1],
+                                                  modifiedTime: DateTime.now());
+                                            });
+                                          }},
                       title: RichText(
                         maxLines: 3,
                         overflow: TextOverflow.ellipsis,
-                        text: 
+                        text:
                       TextSpan(
                         text: "${filteredNotes[index].title} \n",
                         style: TextStyle(color: Colors.black, 

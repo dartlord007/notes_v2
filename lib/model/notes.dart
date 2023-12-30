@@ -10,7 +10,9 @@ class Note {
     required this.content,
     required this.modifiedTime,
   });
-}
+} //This class is the model for how the notes are supposed to look. 
+
+// The list of notes below are the sample notes that will be displayed by the app by default. The app was built with normal stateful class. You can do one where you create a todo app with provider or bloc. This should work. 
 
 
 List<Note> sampleNotes = [
